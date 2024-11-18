@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bishe.teamproject.dao.TeamUserMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.bishe.teamproject.model.TeamUser">
+                    <id column="id" property="id"/>
+                    <result column="username" property="username"/>
+                    <result column="realname" property="realname"/>
+                    <result column="sex" property="sex"/>
+                    <result column="tel" property="tel"/>
+                    <result column="email" property="email"/>
+                    <result column="image" property="image"/>
+                    <result column="join_time" property="joinTime"/>
+                    <result column="team_id" property="teamId"/>
+                    <result column="password" property="password"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            id, username, realname, sex, tel, email, image, join_time, team_id, password
+        </sql>
+
+    <resultMap id="queryTeamUserListMap" type="com.bishe.teamproject.model.TeamUser" extends="BaseResultMap">
+        <association property="team" javaType="com.bishe.teamproject.model.Team">
+            <id column="id" property="id"/>
+            <result column="tname" property="name"/>
+        </association>
+    </resultMap>
+
+
+    <select id="queryTeamUserList" resultMap="queryTeamUserListMap">
+        select
+               tu.*,t.name as tname
+        from
+             team_project.team_user tu
+        LEFT JOIN team_project.team t on t.id = tu.team_id
+     <where>
+            and t.user_id=#{userId}
+        <if test="tel!=null and tel!=''">
+            and tel like '%${tel}%'
+        </if>
+        <if test="email!=null and email!=''">
+            and email like '%${email}%'
+        </if>
+     </where>
+    </select>
+
+
+    <select id="queryTeamUserByTeamIdAndTel" resultType="com.bishe.teamproject.model.TeamUser">
+
+        select * from team_project.team_user tu where tu.tel=#{tel} and tu.team_id=#{teamId}
+
+    </select>
+
+    <select id="queryByUserNameAndPwd" resultType="com.bishe.teamproject.model.TeamUser">
+        select * from team_project.team_user tu
+        where tu.realname=#{username}
+        and tu.`password`=#{password}
+    </select>
+
+</mapper>

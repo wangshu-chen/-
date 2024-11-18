@@ -1,0 +1,34 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+myserver:
+  host: localhost
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/team_project?useUnicode=true&amp&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 1234
+    type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    static-path-pattern: /毕设项目图片/**
+  web:
+    resources:
+      static-locations: file:D://毕设项目图片/
+  main:
+    allow-circular-references: true
+  devtools:
+    restart:
+      enabled: true
+  mustache:
+    servlet:
+      expose-request-attributes:
+
+
+mybatis-plus:
+  type-aliases-package: com.bishe.teamproject.model
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:com/bishe/teamproject/mapper/*.xml

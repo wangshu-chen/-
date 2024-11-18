@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bishe.teamproject.dao.TypeInfoMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.bishe.teamproject.model.TypeInfo">
+                    <id column="id" property="id"/>
+                    <result column="name" property="name"/>
+                    <result column="remarks" property="remarks"/>
+        </resultMap>
+
+        <!-- 通用查询结果列 -->
+        <sql id="Base_Column_List">
+            id, name, remarks
+        </sql>
+    <select id="queryTypeList" resultType="com.bishe.teamproject.model.TypeInfo"
+            parameterType="com.bishe.teamproject.model.TypeInfo">
+        select * from team_project.type_info t
+        <where>
+            <if test="name!=null and name!=''">
+                and t.name like '%${name}%'
+            </if>
+        </where>
+    </select>
+
+</mapper>
